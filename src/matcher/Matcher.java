@@ -3,6 +3,7 @@
  */
 package matcher;
 
+import java.io.*;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,6 +64,22 @@ public class Matcher {
 	
 	public void writeResultFile(String output_filepath) {
 		// TODO: take `matches` members and write them as XML file to `output_filepath`
+		
+		try{
+			PrintWriter writer = new PrintWriter(output_filepath, "UTF-8");
+			writer.close();
+			
+			writer.println("<?XML version=\"1.0\"?>");
+			writer.println("<DOCUMENT>");
+			for (Match m : matches) {
+				writer.println("<ENTRY>"+m+"</ENTRY>");
+			}
+			writer.println("</DOCUMENT");
+		
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
