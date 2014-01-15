@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<configuration>
+	<database>
+	    <name>web-crawler</name>
+		<username>vulnerabilities</username>
+		<password>matcher</password>
+		<host>localhost</host>
+	</database>
+</configuration>
