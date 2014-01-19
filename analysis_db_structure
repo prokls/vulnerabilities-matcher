@@ -1,0 +1,154 @@
+mysql> show tables;
++-----------------------+
+| Tables_in_web-crawler |
++-----------------------+
+| Certificate           |
+| CrawlingSession       |
+| Header                |
+| HostInfo              |
+| HostInfo_todoUrls     |
+| PageInfo              |
+| hibernate_sequence    |
++-----------------------+
+7 rows in set (0.01 sec)
+
+mysql> DESCRIBE Certificate;
++--------------------+--------------+------+-----+---------+-------+
+| Field              | Type         | Null | Key | Default | Extra |
++--------------------+--------------+------+-----+---------+-------+
+| id                 | bigint(20)   | NO   | PRI | NULL    |       |
+| basicConstraints   | int(11)      | YES  |     | NULL    |       |
+| depth              | smallint(6)  | YES  |     | NULL    |       |
+| encodedCertificate | longblob     | YES  |     | NULL    |       |
+| extendedKeyUsage   | longtext     | YES  |     | NULL    |       |
+| issuer             | longtext     | YES  |     | NULL    |       |
+| keyUsage           | longtext     | YES  |     | NULL    |       |
+| pkAlgorithm        | longtext     | YES  |     | NULL    |       |
+| publicKey          | longblob     | YES  |     | NULL    |       |
+| signatureAlgorithm | longtext     | YES  |     | NULL    |       |
+| subject            | longtext     | YES  |     | NULL    |       |
+| type               | varchar(255) | YES  |     | NULL    |       |
+| HOST_ID            | bigint(20)   | YES  | MUL | NULL    |       |
++--------------------+--------------+------+-----+---------+-------+
+13 rows in set (0.17 sec)
+
+mysql> DESCRIBE CrawlingSession;
++-------------+------------+------+-----+---------+-------+
+| Field       | Type       | Null | Key | Default | Extra |
++-------------+------------+------+-----+---------+-------+
+| id          | bigint(20) | NO   | PRI | NULL    |       |
+| description | longtext   | YES  |     | NULL    |       |
+| timeStarted | bigint(20) | YES  |     | NULL    |       |
++-------------+------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE Header;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | bigint(20)   | NO   | PRI | NULL    |       |
+| name    | varchar(255) | YES  |     | NULL    |       |
+| value   | longtext     | YES  |     | NULL    |       |
+| PAGE_ID | bigint(20)   | YES  | MUL | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE HostInfo;
++-----------------+------------+------+-----+---------+-------+
+| Field           | Type       | Null | Key | Default | Extra |
++-----------------+------------+------+-----+---------+-------+
+| id              | bigint(20) | NO   | PRI | NULL    |       |
+| certificateSize | bigint(20) | YES  |     | NULL    |       |
+| cipherSuite     | longtext   | YES  |     | NULL    |       |
+| hostName        | longtext   | YES  |     | NULL    |       |
+| lastVisited     | bigint(20) | YES  |     | NULL    |       |
+| needsClientAuth | tinyint(1) | YES  |     | NULL    |       |
+| sslProtocol     | longtext   | YES  |     | NULL    |       |
+| wantsClientAuth | tinyint(1) | YES  |     | NULL    |       |
+| CRAWLING_ID     | bigint(20) | YES  | MUL | NULL    |       |
++-----------------+------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> DESCRIBE HostInfo_todoUrls;
++-------------+------------+------+-----+---------+-------+
+| Field       | Type       | Null | Key | Default | Extra |
++-------------+------------+------+-----+---------+-------+
+| HostInfo_id | bigint(20) | NO   | MUL | NULL    |       |
+| todoUrls    | longtext   | YES  |     | NULL    |       |
++-------------+------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE PageInfo;
++------------+------------+------+-----+---------+-------+
+| Field      | Type       | Null | Key | Default | Extra |
++------------+------------+------+-----+---------+-------+
+| id         | bigint(20) | NO   | PRI | NULL    |       |
+| accessTime | bigint(20) | YES  |     | NULL    |       |
+| url        | longtext   | YES  |     | NULL    |       |
+| HOST_ID    | bigint(20) | YES  | MUL | NULL    |       |
++------------+------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE hibernate_sequence;
++----------+------------+------+-----+---------+-------+
+| Field    | Type       | Null | Key | Default | Extra |
++----------+------------+------+-----+---------+-------+
+| next_val | bigint(20) | YES  |     | NULL    |       |
++----------+------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Certificate;
++----------+
+| COUNT(*) |
++----------+
+|    17509 |
++----------+
+1 row in set (0.10 sec)
+
+mysql> SELECT COUNT(*) FROM CrawlingSession;
++----------+
+| COUNT(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Header;
++----------+
+| COUNT(*) |
++----------+
+|    69718 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM HostInfo;
++----------+
+| COUNT(*) |
++----------+
+|    14187 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM HostInfo_todoUrls;
++----------+
+| COUNT(*) |
++----------+
+|    25256 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM PageInfo;
++----------+
+| COUNT(*) |
++----------+
+|    17278 |
++----------+
+1 row in set (0.03 sec)
+
+mysql> SELECT COUNT(*) FROM hibernate_sequence;
++----------+
+| COUNT(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)

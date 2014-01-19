@@ -16,8 +16,8 @@ Running the software
 --------------------
 
 A `MySQL`_ server must be running and the web-crawler-analysis database must
-be stored in the database ``web-crawler-analysis``. You have to provide the
-access credentials in the configuration file.
+be stored in the database ``web-crawler``. You have to provide the
+access credentials in the configuration file ``config.xml``.
 Then you can start the Java program using ``./matcher vul_db.xml``. This will
 create a file ``output.html``.
 
