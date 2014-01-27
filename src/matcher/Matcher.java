@@ -44,9 +44,7 @@ public class Matcher {
 
 	public void readVulnerabilities(String vuln_db_filepath) {
 		VulnerabilityReader reader = new VulnerabilityReader(vuln_db_filepath);
-		for (VulnerabilityTuple vt : reader) {
-			vuls.add(vt);
-		}
+		vuls = reader.getVulns();
 
 		LOG.info(MessageFormat.format("{0} vulnerability tuples created.",
 				vuls.size()));
@@ -136,8 +134,9 @@ public class Matcher {
 
 		Matcher mat = new Matcher();
 		mat.readVulnerabilities(args[0]);
-		mat.matchServerData();
-		mat.writeResultFile("matching_result.xml");
+		//mat.matchServerData();
+		//mat.writeResultFile("matching_result.xml");
+		
 
 		System.out.println("Done.");
 	}
