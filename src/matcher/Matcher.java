@@ -3,7 +3,8 @@
  */
 package matcher;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,15 +14,17 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import vulndb.VulnerabilityReader;
 import vulndb.VulnerabilityTuple;
@@ -74,11 +77,9 @@ public class Matcher {
 		LOG.info(MessageFormat.format("{0} matches found.", matches.size()));
 	}
 
-	public void writeResultFile(String output_filepath) {
+	public void writeResultFile(String output_filepath, HashSet<ResultTuple> results) {
 		// TODO: take `matches` members and write them as XML file to
 		// `output_filepath`
-
-		int id_num = 0;
 
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory
@@ -90,26 +91,47 @@ public class Matcher {
 			Element rootElement = doc.createElement("document");
 			doc.appendChild(rootElement);
 
-			for (Match m : matches) {
-				id_num += 1;
+			for (ResultTuple res : results) {
 
 				// entry element
 				Element entry = doc.createElement("entry");
-				entry.appendChild(doc.createTextNode(m.toString()));
-				entry.setAttribute("id", String.valueOf(id_num));
 				rootElement.appendChild(entry);
-
-				// write the content into xml file
-				TransformerFactory transformerFactory = TransformerFactory
-						.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(
-						new File(output_filepath));
-
-				transformer.transform(source, result);
-				System.out.println("File saved.");
+				
+				Element hostname = doc.createElement("hostname");
+				hostname.appendChild(doc.createTextNode(res.getHostname()));
+				entry.appendChild(hostname);
+				
+				Element score = doc.createElement("score");
+				score.appendChild(doc.createTextNode(res.getScore()));
+				entry.appendChild(score);
+				
+				Element accessCompl = doc.createElement("accessComplexity");
+				accessCompl.appendChild(doc.createTextNode(res.getAccessComplexity()));
+				entry.appendChild(accessCompl);
+				
+				Element summary = doc.createElement("summary");
+				summary.appendChild(doc.createTextNode(res.getSummary()));
+				entry.appendChild(summary);
+				
+				Element references = doc.createElement("references");
+				for(String ref: res.getReference()){
+					Element reference = doc.createElement("reference");
+					reference.appendChild(doc.createTextNode(ref));
+					references.appendChild(reference);
+				}
+				entry.appendChild(references);
 			}
+			
+			// write the content into xml file
+			TransformerFactory transformerFactory = TransformerFactory
+					.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(
+					new File(output_filepath));
+
+			transformer.transform(source, result);
+			System.out.println("File saved.");
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
@@ -117,6 +139,26 @@ public class Matcher {
 			tfe.printStackTrace();
 		}
 
+	}
+	
+	public HashSet<ResultTuple> WriteValues(String vuln_db){
+		SAXParser parser;
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		MatcherSaxHandler handler = new MatcherSaxHandler(matches);
+		try {
+			parser = factory.newSAXParser();			
+			parser.parse(vuln_db, handler);			
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return handler.getTuple();
+		
 	}
 
 	/**
@@ -135,9 +177,8 @@ public class Matcher {
 		Matcher mat = new Matcher();
 		mat.readVulnerabilities(args[0]);
 		mat.matchServerData();
-		mat.writeResultFile("matching_result.xml");
+		mat.writeResultFile("matching_result.xml",mat.WriteValues(args[0]));
 		
-
 		System.out.println("Done.");
 	}
 }

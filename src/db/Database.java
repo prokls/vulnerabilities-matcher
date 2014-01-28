@@ -105,7 +105,6 @@ public class Database {
 
 				ServerSoftwareTuple sst = new ServerSoftwareTuple(host,
 						software, version, dep);
-
 				tuples.add(sst);
 			}
 

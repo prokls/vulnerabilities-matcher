@@ -38,4 +38,12 @@ public class Match {
 	public String toString() {
 		return MessageFormat.format("Match<{0}, {1}>", hostname, vul_id);
 	}
+	
+	public String getCve(){
+		return vul_id;
+	}
+	
+	public String getHostname(){
+		return hostname;
+	}
 }
