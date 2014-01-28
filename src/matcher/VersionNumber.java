@@ -9,6 +9,8 @@ public class VersionNumber implements Comparable<VersionNumber> {
 
 	public VersionNumber(String version) {
 		number = new ArrayList<Integer>();
+		if(version == null)
+			return;
 		String[] ver = version.split("\\.");
 		for (String v : ver)
 		{

@@ -134,8 +134,8 @@ public class Matcher {
 
 		Matcher mat = new Matcher();
 		mat.readVulnerabilities(args[0]);
-		//mat.matchServerData();
-		//mat.writeResultFile("matching_result.xml");
+		mat.matchServerData();
+		mat.writeResultFile("matching_result.xml");
 		
 
 		System.out.println("Done.");
