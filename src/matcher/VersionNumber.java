@@ -9,8 +9,15 @@ public class VersionNumber implements Comparable<VersionNumber> {
 
 	public VersionNumber(String version) {
 		number = new ArrayList<Integer>();
-		for (String v : version.trim().split("."))
-			number.add(Integer.parseInt(v));
+		if(version == null)
+			return;
+		String[] ver = version.split("\\.");
+		for (String v : ver)
+		{
+			try{
+				number.add(Integer.parseInt(v));
+			}catch(NumberFormatException e){}
+		}
 	}
 
 	public static boolean isValid(String version) {
