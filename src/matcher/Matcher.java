@@ -97,9 +97,13 @@ public class Matcher {
 				Element entry = doc.createElement("entry");
 				rootElement.appendChild(entry);
 				
-				Element hostname = doc.createElement("hostname");
-				hostname.appendChild(doc.createTextNode(res.getHostname()));
-				entry.appendChild(hostname);
+				Element hostnames = doc.createElement("hostnames");
+				for(String host: res.getHostname()){
+					Element hostname = doc.createElement("hostname");
+					hostname.appendChild(doc.createTextNode(host));
+					hostnames.appendChild(hostname);
+				}
+				entry.appendChild(hostnames);
 				
 				Element score = doc.createElement("score");
 				score.appendChild(doc.createTextNode(res.getScore()));
