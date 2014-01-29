@@ -26,8 +26,10 @@ public class MatcherSaxHandler extends DefaultHandler{
 		{
 			for(Match m: matches){
 				if(m.getCve().equals(attributes.getValue("id"))){
+					if(!flag)
+						temp = new ResultTuple();
 					flag = true;
-					temp = new ResultTuple(m.getHostname());
+					temp.setHostname(m.getHostname());
 				}
 			}
 		}

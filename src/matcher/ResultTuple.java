@@ -3,15 +3,16 @@ package matcher;
 import java.util.ArrayList;
 
 public class ResultTuple {
-	String hostname,summary,score,accessComplexity;
-	ArrayList<String> reference = new ArrayList<String>();
+	private String summary,score,accessComplexity;
+	private ArrayList<String> reference, hostname;
 	
-	public ResultTuple(String hostname){
-		this.hostname=hostname;
+	public ResultTuple(){
+		this.reference = new ArrayList<String>();
+		this.hostname = new ArrayList<String>();
 	}
 	
 	public void setHostname(String hostname){
-		this.hostname=hostname;
+		this.hostname.add(hostname);
 	}
 	
 	public void setSummary(String summary){
@@ -30,7 +31,7 @@ public class ResultTuple {
 		this.reference.add(reference);
 	}
 	
-	public String getHostname(){
+	public ArrayList<String> getHostname(){
 		return hostname;
 	}
 	
