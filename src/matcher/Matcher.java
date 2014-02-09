@@ -78,7 +78,8 @@ public class Matcher {
 	}
 
 	public void writeResultFile(String output_filepath, HashSet<ResultTuple> results) {
-
+		// write result xml file with DOM parser
+		// first step: make structure with all necessary elements
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory
 					.newInstance();
