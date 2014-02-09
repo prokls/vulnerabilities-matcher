@@ -1,6 +1,14 @@
+/*
+ * A software dependency. Allows comparison whether a system
+ * (represented as a SoftwareDependency) matches a given
+ * software stack (also as a SoftwareDependency).
+ * 
+ * Is not actually used, because read data from vulnerability DB
+ * and web crawler data does only create empty SoftwareDependency.
+ */
 package matcher;
 
-public class SoftwareDependency {
+public class SoftwareDependency implements Comparable<SoftwareDependency> {
 	private String[] dep;
 
 	public SoftwareDependency(String dep_stack) {

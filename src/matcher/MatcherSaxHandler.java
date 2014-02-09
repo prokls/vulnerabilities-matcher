@@ -1,3 +1,7 @@
+/*
+ * SAX handler for parsing vulnerabilities database.
+ * Contains callbacks for the different tags.
+ */
 package matcher;
 
 import java.util.HashSet;
@@ -7,26 +11,25 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
-public class MatcherSaxHandler extends DefaultHandler{
+public class MatcherSaxHandler extends DefaultHandler {
 
 	private HashSet<ResultTuple> vuls = new HashSet<ResultTuple>();
 	Set<Match> matches = null;
 	private ResultTuple temp = null;
-	boolean flag = false, scoreFlag=false, summaryFlag=false, accessComplFlag=false, referenceFlag=false;
-	
-	public MatcherSaxHandler(Set<Match> matches){
+	boolean flag = false, scoreFlag = false, summaryFlag = false;
+	boolean accessComplFlag = false, referenceFlag = false;
+
+	public MatcherSaxHandler(Set<Match> matches) {
 		this.matches = matches;
 	}
-	
+
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		if(qName.equalsIgnoreCase("entry"))
-		{
-			for(Match m: matches){
-				if(m.getCve().equals(attributes.getValue("id"))){
-					if(!flag)
+		if (qName.equalsIgnoreCase("entry")) {
+			for (Match m : matches) {
+				if (m.getCve().equals(attributes.getValue("id"))) {
+					if (!flag)
 						temp = new ResultTuple();
 					flag = true;
 					temp.setHostname(m.getHostname());
@@ -34,24 +37,24 @@ public class MatcherSaxHandler extends DefaultHandler{
 			}
 		}
 
-		if(flag==true && qName.equalsIgnoreCase("cvss:score"))
-			scoreFlag=true;
-		
-		if(flag==true && qName.equalsIgnoreCase("cvss:access-complexity"))
-			accessComplFlag=true;
-		
-		if(flag==true && qName.equalsIgnoreCase("vuln:summary"))
-			summaryFlag=true;
-		
-		if(flag==true && qName.equalsIgnoreCase("vuln:reference"))
-			referenceFlag=true;
+		if (flag && qName.equalsIgnoreCase("cvss:score"))
+			scoreFlag = true;
+
+		if (flag && qName.equalsIgnoreCase("cvss:access-complexity"))
+			accessComplFlag = true;
+
+		if (flag && qName.equalsIgnoreCase("vuln:summary"))
+			summaryFlag = true;
+
+		if (flag && qName.equalsIgnoreCase("vuln:reference"))
+			referenceFlag = true;
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		if(qName.equalsIgnoreCase("entry") && flag==true){
-			flag=false;
+		if (qName.equalsIgnoreCase("entry") && flag == true) {
+			flag = false;
 			vuls.add(temp);
 		}
 	}
@@ -59,26 +62,26 @@ public class MatcherSaxHandler extends DefaultHandler{
 	@Override
 	public void characters(char ch[], int start, int length)
 			throws SAXException {
-		if(scoreFlag){
+		if (scoreFlag) {
 			temp.setScore(new String(ch, start, length));
-			scoreFlag=false;
+			scoreFlag = false;
 		}
-		if(accessComplFlag){
+		if (accessComplFlag) {
 			temp.setAccessComplexity(new String(ch, start, length));
-			accessComplFlag=false;
+			accessComplFlag = false;
 		}
-		if(summaryFlag){
+		if (summaryFlag) {
 			temp.setSummary(new String(ch, start, length));
-			summaryFlag=false;
+			summaryFlag = false;
 		}
-		if(referenceFlag){
+		if (referenceFlag) {
 			temp.setReference(new String(ch, start, length));
-			referenceFlag=false;
+			referenceFlag = false;
 		}
 	}
-	
-	public HashSet<ResultTuple> getTuple(){
+
+	public HashSet<ResultTuple> getTuple() {
 		return vuls;
 	}
-	
+
 }
