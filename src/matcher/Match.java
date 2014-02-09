@@ -22,6 +22,8 @@ public class Match {
 	 * 
 	 * @param vul_db_filepath
 	 *            Filepath to vulnerability database (xml)
+	 * @param cve
+	 *            ID of vulnerability
 	 * @param key
 	 *            An attribute of the vulnerability (eg. summary)
 	 * @return String the value corresponding to the key for this vul.

@@ -78,8 +78,6 @@ public class Matcher {
 	}
 
 	public void writeResultFile(String output_filepath, HashSet<ResultTuple> results) {
-		// TODO: take `matches` members and write them as XML file to
-		// `output_filepath`
 
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory
@@ -157,7 +155,6 @@ public class Matcher {
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -175,8 +172,7 @@ public class Matcher {
 			System.exit(1);
 		}
 
-		// TODO: only during development (set to Level.WARNING in production)
-		LOG.setLevel(Level.FINEST);
+		LOG.setLevel(Level.WARNING);
 
 		Matcher mat = new Matcher();
 		mat.readVulnerabilities(args[0]);

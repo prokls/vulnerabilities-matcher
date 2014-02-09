@@ -1,8 +1,8 @@
 /**
  * Retrieve a server software package available for a given host.
- * Typically consists of a software stack (dependencies), a software
- * identifier (name) and a version number. The important comparison
- * capabilities are implemented in `VulnerabilityTuple.compareTo`.
+ * Consists of a software stack (dependencies), a software
+ * name and a version number. The important comparison capabilities
+ * are implemented in `VulnerabilityTuple.compareTo`.
  * 
  * This uniquely identifies some software in version X with dependencies
  * at a given host.
@@ -51,6 +51,11 @@ public class ServerSoftwareTuple implements Comparable<ServerSoftwareTuple> {
 		return stack;
 	}
 
+	/*
+	 * Take some input string and split software name
+	 * from software version number. Returns
+	 * Array[software name, version number].
+	 */ 
 	public static String[] splitVersion(String spec) {
 		Pattern re1 = Pattern.compile("((\\d+(\\.\\d+)+)([-+]\\w+)*)");
 		Pattern re2 = Pattern.compile("^[\\/_\t ]");

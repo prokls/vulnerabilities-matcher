@@ -1,53 +1,57 @@
+/*
+ * A ResultTuple corresponds to one Match but adds additional
+ * information about the vulnerability (such as score, reference, ...) 
+ */
 package matcher;
 
 import java.util.ArrayList;
 
 public class ResultTuple {
-	private String summary,score,accessComplexity;
+	private String summary, score, accessComplexity;
 	private ArrayList<String> reference, hostname;
-	
-	public ResultTuple(){
+
+	public ResultTuple() {
 		this.reference = new ArrayList<String>();
 		this.hostname = new ArrayList<String>();
 	}
-	
-	public void setHostname(String hostname){
+
+	public void setHostname(String hostname) {
 		this.hostname.add(hostname);
 	}
-	
-	public void setSummary(String summary){
-		this.summary=summary;
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
-	
-	public void setScore(String score){
-		this.score=score;
+
+	public void setScore(String score) {
+		this.score = score;
 	}
-	
-	public void setAccessComplexity(String accessComplexity){
-		this.accessComplexity=accessComplexity;
+
+	public void setAccessComplexity(String accessComplexity) {
+		this.accessComplexity = accessComplexity;
 	}
-	
-	public void setReference(String reference){
+
+	public void setReference(String reference) {
 		this.reference.add(reference);
 	}
-	
-	public ArrayList<String> getHostname(){
+
+	public ArrayList<String> getHostname() {
 		return hostname;
 	}
-	
-	public String getSummary(){
+
+	public String getSummary() {
 		return summary;
 	}
-	
-	public String getScore(){
+
+	public String getScore() {
 		return score;
 	}
-	
-	public String getAccessComplexity(){
+
+	public String getAccessComplexity() {
 		return accessComplexity;
 	}
-	
-	public ArrayList<String> getReference(){
+
+	public ArrayList<String> getReference() {
 		return reference;
 	}
 }

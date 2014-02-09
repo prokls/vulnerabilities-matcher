@@ -1,3 +1,6 @@
+/*
+ * Represents the version number of a software package.
+ */
 package matcher;
 
 import java.util.ArrayList;
