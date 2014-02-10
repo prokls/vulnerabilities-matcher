@@ -33,6 +33,9 @@ public class Database {
 	public Database() {
 	}
 
+	/*
+	 * Read config.xml and return database login credentials
+	 */
 	private HashMap<String, String> readConfig() {
 		HashMap<String, String> config = new HashMap<String, String>();
 		try {
@@ -82,6 +85,10 @@ public class Database {
 
 	}
 
+	/*
+	 * Retrieve software information from database
+	 * Returns Set<ServerSoftwareTuple> of software information for all hosts
+	 */
 	public Set<ServerSoftwareTuple> getTuples() {
 		Statement sql = null;
 		HashSet<ServerSoftwareTuple> tuples = new HashSet<ServerSoftwareTuple>();
